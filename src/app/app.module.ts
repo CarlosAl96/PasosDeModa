@@ -4,17 +4,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './modules/auth/auth.component';
 import { ProductsComponent } from './modules/products/products.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { SharedComponentsModule } from './shared-module/shared-components/shared-components.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
-    ProductsComponent
+    ProductsComponent,
+    NavBarComponent,
   ],
-  imports: [
-    BrowserModule
-  ],
+  imports: [BrowserModule, SharedComponentsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
