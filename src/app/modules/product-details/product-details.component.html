@@ -1,0 +1,54 @@
+<div class="product-details">
+  <div class="carousel">
+    <p-carousel
+      [value]="productImages"
+      [numVisible]="1"
+      [numScroll]="1"
+      [circular]="false"
+      [showIndicators]="false"
+      class=""
+    >
+      <ng-template let-product pTemplate="item">
+        <div
+          class="border-1 surface-border border-round m-2 text-center py-5 px-3"
+        >
+          <div class="mb-3">
+            <img
+              src="{{ 'assets/images/' + product + '.webp' }}"
+              alt="product"
+              class="w-6 shadow-2"
+              width="700"
+            />
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
+  </div>
+  <div class="details">
+    <div>
+      <h3>Example shoe name</h3>
+    </div>
+
+    <div>
+      <strong>$30</strong>
+    </div>
+
+    <div class="sizes">
+      <span class="title">Tamaños</span>
+
+      <div class="size-wrapper">
+        <div *ngFor="let item of sizes" class="size">
+          <span>{{ item }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="add-to-card-button">
+      <p-button
+        styleClass="p-button-secondary "
+        label="Añadir al carrito"
+        
+      ></p-button>
+    </div>
+  </div>
+</div>

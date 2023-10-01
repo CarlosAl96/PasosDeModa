@@ -1,0 +1,44 @@
+:host ::ng-deep {
+  .p-button {
+    width: 400px;
+  }
+
+  .product-details {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    margin: 100px auto 0 auto;
+
+    .carousel {
+      width: 800px;
+    }
+
+    .sizes {
+      margin-top: 20px;
+
+      .title {
+        font-size: 1.25rem;
+      }
+
+      .size-wrapper {
+        margin-top: 30px;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        grid-gap: 10px;
+
+        .size {
+          width: 110px;
+          text-align: center;
+          padding: 5px;
+          border: 1px solid #000;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .add-to-card-button {
+      text-align: center;
+      margin-top: 20px;
+    }
+  }
+}
