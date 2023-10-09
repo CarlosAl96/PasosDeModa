@@ -7,6 +7,9 @@ import { MenubarModule } from 'primeng/menubar';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { CarouselModule } from 'primeng/carousel';
+import { DialogModule } from 'primeng/dialog';
+import { DialogService } from 'primeng/dynamicdialog';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   declarations: [],
@@ -18,6 +21,8 @@ import { CarouselModule } from 'primeng/carousel';
     CardModule,
     ButtonModule,
     CarouselModule,
+    DialogModule,
+    InputTextModule,
   ],
   exports: [
     BrowserModule,
@@ -26,6 +31,9 @@ import { CarouselModule } from 'primeng/carousel';
     CardModule,
     ButtonModule,
     CarouselModule,
+    DialogModule,
+    InputTextModule,
   ],
+  providers: [DialogService],
 })
 export class SharedComponentsModule {}

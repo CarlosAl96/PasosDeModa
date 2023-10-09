@@ -1,8 +1,25 @@
 <p-menubar [model]="items">
-    <ng-template pTemplate="start">
-        <img src="https://primefaces.org/cdn/primeng/images/primeng.svg" height="40" class="mr-2" />
-    </ng-template>
-    <ng-template pTemplate="end">
-        <input type="text" pInputText placeholder="Search" class="w-full" />
-    </ng-template>
+  <ng-template pTemplate="start">
+    <img
+      src="https://primefaces.org/cdn/primeng/images/primeng.svg"
+      height="40"
+      class="mr-2"
+    />
+  </ng-template>
+
+  <ng-template pTemplate="end">
+    <div class="flex flex-row algin-items-center">
+      <input type="text" pInputText placeholder="Search" class="w-full mr-3" />
+      <p-button
+        label="Iniciar sesión"
+        (onClick)="showModalLogin()"
+        class="w-full"
+      ></p-button>
+      <p-button
+        label="Registrarse"
+        (onClick)="showModalRegister()"
+        class="w-full"
+      ></p-button>
+    </div>
+  </ng-template>
 </p-menubar>
