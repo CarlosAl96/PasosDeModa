@@ -1,0 +1,16 @@
+:host ::ng-deep {
+  .p-dropdown {
+    width: 100%;
+  }
+
+  .p-card-content {
+    padding: 0;
+  }
+
+  .cart {
+    width: 100%;
+    max-width: 1440px;
+
+    margin: 100px auto 0 auto;
+  }
+}

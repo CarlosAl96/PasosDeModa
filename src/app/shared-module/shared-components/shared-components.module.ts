@@ -10,6 +10,8 @@ import { CarouselModule } from 'primeng/carousel';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+
 
 @NgModule({
   declarations: [],
@@ -23,6 +25,7 @@ import { InputTextModule } from 'primeng/inputtext';
     CarouselModule,
     DialogModule,
     InputTextModule,
+    DropdownModule,
   ],
   exports: [
     BrowserModule,
@@ -33,6 +36,7 @@ import { InputTextModule } from 'primeng/inputtext';
     CarouselModule,
     DialogModule,
     InputTextModule,
+    DropdownModule,
   ],
   providers: [DialogService],
 })

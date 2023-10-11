@@ -4,6 +4,7 @@ import { ProductsComponent } from './modules/products/products.component';
 import { ProductDetailsComponent } from './modules/product-details/product-details.component';
 import { LoginComponent } from './modules/login/login.component';
 import { RegisterComponent } from './modules/register/register.component';
+import { OrderCartComponent } from './modules/order-cart/order-cart.component';
 
 const routes: Routes = [
   {
@@ -19,7 +20,10 @@ const routes: Routes = [
     path: 'product/:id/details',
     component: ProductDetailsComponent,
   },
-
+  {
+    path: 'cart',
+    component: OrderCartComponent,
+  },
 ];
 
 @NgModule({
