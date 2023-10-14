@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { MessageModule } from 'primeng/message';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MenubarModule } from 'primeng/menubar';
@@ -26,6 +26,7 @@ import { DropdownModule } from 'primeng/dropdown';
     DialogModule,
     InputTextModule,
     DropdownModule,
+    MessageModule,
   ],
   exports: [
     BrowserModule,
@@ -37,6 +38,7 @@ import { DropdownModule } from 'primeng/dropdown';
     DialogModule,
     InputTextModule,
     DropdownModule,
+    MessageModule,
   ],
   providers: [DialogService],
 })

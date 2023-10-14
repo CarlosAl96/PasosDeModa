@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
+import { FirebaseService } from 'src/app/core/services/firebase.service';
 import { LoginComponent } from 'src/app/modules/login/login.component';
 import { RegisterComponent } from 'src/app/modules/register/register.component';
 
@@ -12,10 +13,17 @@ import { RegisterComponent } from 'src/app/modules/register/register.component';
 export class NavBarComponent implements OnInit {
   items: MenuItem[] | undefined;
 
-  constructor(private _dialogService: DialogService) {}
+  constructor(
+    private _dialogService: DialogService,
+    private _fire: FirebaseService
+  ) {}
 
   ngOnInit() {
     this.items = [];
+
+    this._fire.getUser().subscribe((resp) => {
+      console.log(resp);
+    });
   }
 
   showModalLogin() {

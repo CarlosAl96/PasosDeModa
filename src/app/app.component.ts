@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FirebaseService } from './core/services/firebase.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +10,9 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'PasosDeModa';
 
-  constructor() {}
+  constructor(private _fire: FirebaseService) {
+    if (localStorage.getItem('uid')) {
+      this._fire.setUser(localStorage.getItem('uid') || '');
+    }
+  }
 }
