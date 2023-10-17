@@ -12,6 +12,7 @@ import { RegisterComponent } from './modules/register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OrderCartComponent } from './modules/order-cart/order-cart.component';
 import { FilterAccordionComponent } from './components/filter-accordion/filter-accordion.component';
+import { OrdersComponent } from './modules/orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { FilterAccordionComponent } from './components/filter-accordion/filter-a
     RegisterComponent,
     OrderCartComponent,
     FilterAccordionComponent,
+    OrdersComponent,
   ],
   imports: [
     BrowserModule,

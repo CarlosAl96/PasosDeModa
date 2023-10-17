@@ -5,7 +5,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MenubarModule } from 'primeng/menubar';
 import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
 import { CarouselModule } from 'primeng/carousel';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -14,6 +13,11 @@ import { DropdownModule } from 'primeng/dropdown';
 import { AccordionModule } from 'primeng/accordion';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { CheckboxModule } from 'primeng/checkbox';
+import { TableModule } from 'primeng/table';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { TagModule } from 'primeng/tag';
+import { ButtonModule } from 'primeng/button';
+
 
 @NgModule({
   declarations: [],
@@ -32,6 +36,9 @@ import { CheckboxModule } from 'primeng/checkbox';
     AccordionModule,
     RadioButtonModule,
     CheckboxModule,
+    TableModule,
+    MultiSelectModule,
+    TagModule,
   ],
   exports: [
     BrowserModule,
@@ -47,6 +54,9 @@ import { CheckboxModule } from 'primeng/checkbox';
     AccordionModule,
     RadioButtonModule,
     CheckboxModule,
+    TableModule,
+    MultiSelectModule,
+    TagModule,
   ],
   providers: [DialogService],
 })
