@@ -11,7 +11,9 @@ import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
-
+import { AccordionModule } from 'primeng/accordion';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [],
@@ -27,6 +29,9 @@ import { DropdownModule } from 'primeng/dropdown';
     InputTextModule,
     DropdownModule,
     MessageModule,
+    AccordionModule,
+    RadioButtonModule,
+    CheckboxModule,
   ],
   exports: [
     BrowserModule,
@@ -39,6 +44,9 @@ import { DropdownModule } from 'primeng/dropdown';
     InputTextModule,
     DropdownModule,
     MessageModule,
+    AccordionModule,
+    RadioButtonModule,
+    CheckboxModule,
   ],
   providers: [DialogService],
 })

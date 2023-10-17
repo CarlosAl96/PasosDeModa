@@ -3,15 +3,15 @@
     <img alt="Card" src="assets/images/shoe.webp" />
 
     <div class="title">
-      <strong> name example </strong>
-      <span> $30 </span>
+      <strong>{{ product?.name }}</strong>
+      <span>{{ product?.price }}</span>
     </div>
   </ng-template>
 
-  <div>
-    <span>unisex</span>
+  <div class="mb-2">
+    <span>{{ product?.gender }}</span>
   </div>
-  <!-- <div>
-    <span>1 color</span>
-  </div> -->
+  <div>
+    <span>{{ product?.availableColors }} Colores</span>
+  </div>
 </p-card>

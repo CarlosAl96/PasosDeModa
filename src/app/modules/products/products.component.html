@@ -1,3 +1,18 @@
-<div class="products">
-  <app-card *ngFor="let item of productList" class="product"></app-card>
+<div class="product-container">
+  <div class="row">
+    <div class="col-3">
+      <app-filter-accordion
+        (handleSelectedSortType)="handleProductsFilter('sort', $event)"
+        (handleSelectedGender)="handleProductsFilter('gender', $event)"
+      ></app-filter-accordion>
+    </div>
+
+    <div class="col-9">
+      <div class="products">
+        <div *ngFor="let item of productList">
+          <app-card class="product" [product]="item"></app-card>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

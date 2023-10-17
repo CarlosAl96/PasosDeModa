@@ -1,0 +1,75 @@
+<p-accordion class="w-full" [multiple]="true">
+  <p-accordionTab>
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center">
+        <span class="vertical-align-middle">Ordernar Por:</span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="content">
+      <div class="flex justify-content-center">
+        <div class="flex flex-wrap gap-3">
+          <div class="flex align-items-center">
+            <p-radioButton
+              value="high"
+              [(ngModel)]="sortBy"
+              (ngModelChange)="handleSort()"
+              inputId="mayor"
+            ></p-radioButton>
+            <label for="mayor" class="ml-2">Mayor a menor precio</label>
+          </div>
+
+          <div class="flex align-items-center">
+            <p-radioButton
+              value="low"
+              [(ngModel)]="sortBy"
+              (ngModelChange)="handleSort()"
+              inputId="menor"
+            ></p-radioButton>
+            <label for="menor" class="ml-2">Menor a mayor precio</label>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-accordionTab>
+  <p-accordionTab>
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center">
+        <span class="vertical-align-middle">Genero:</span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="content">
+      <div class="flex flex-column justify-content-center gap-3">
+        <div class="flex align-items-center gap-1">
+          <p-checkbox
+            name="group1"
+            value="masculino"
+            [(ngModel)]="selectedGender"
+            (ngModelChange)="handleGender()"
+            inputId="ny"
+          ></p-checkbox>
+          <label for="masculino">Masculino</label>
+        </div>
+        <div class="flex align-items-center gap-1">
+          <p-checkbox
+            name="group1"
+            value="femenino"
+            [(ngModel)]="selectedGender"
+            (ngModelChange)="handleGender()"
+            inputId="sf"
+          ></p-checkbox>
+          <label for="femenino">Femenino</label>
+        </div>
+        <div class="flex align-items-center gap-1">
+          <p-checkbox
+            name="group1"
+            value="unisex"
+            [(ngModel)]="selectedGender"
+            (ngModelChange)="handleGender()"
+            inputId="la"
+          ></p-checkbox>
+          <label for="unisex">Unisex</label>
+        </div>
+      </div>
+    </ng-template>
+  </p-accordionTab>
+</p-accordion>
