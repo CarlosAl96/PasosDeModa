@@ -21,8 +21,7 @@ import {
   CollectionReference,
 } from 'firebase/firestore';
 import { BehaviorSubject } from 'rxjs';
-import { Category, Gender, Model } from '../models/product';
-import { Product } from '../types/product';
+import { Category, Gender, Model, Product } from '../models/product';
 
 @Injectable({
   providedIn: 'root',
@@ -147,6 +146,21 @@ export class FirebaseService {
     );
 
     return genders;
+  }
+
+  async getProducts() {
+    const response = await getDocs(collection(this.querydb, 'products'));
+
+    const products = await Promise.all(
+      response.docs.map(async (product) => {
+        return {
+          ...product.data(),
+          id: product.id,
+        };
+      })
+    );
+
+    return products as Product[];
   }
 
   async AddProduct(data: Product) {

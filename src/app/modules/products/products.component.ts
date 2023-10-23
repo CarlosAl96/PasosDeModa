@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from 'src/app/core/types/product';
+import { FirebaseService } from 'src/app/core/services/firebase.service';
+import { Product } from 'src/app/core/models/product';
 
 @Component({
   selector: 'app-products',
@@ -8,90 +9,19 @@ import { Product } from 'src/app/core/types/product';
 })
 export class ProductsComponent implements OnInit {
   allProducts: Product[] = [];
-  productList: Product[] = [
-    {
-      name: 'Reebok Classic',
-      price: 80,
-      gender: 'unisex',
-    },
-    {
-      name: 'Reebok Nano',
-      price: 65,
-      gender: 'femenino',
-    },
-    {
-      name: 'Reebok CrossFit',
-      price: 90,
-      gender: 'masculino',
-    },
-    {
-      name: 'Reebok Speed TR',
-      price: 70,
-      gender: 'unisex',
-    },
-    {
-      name: 'Reebok Zig Kinetica',
-      price: 120,
-      gender: 'femenino',
-    },
-    {
-      name: 'Reebok Club C',
-      price: 55,
-      gender: 'masculino',
-    },
-    {
-      name: 'Reebok Royal',
-      price: 50,
-      gender: 'femenino',
-    },
-    {
-      name: 'Reebok Floatride',
-      price: 100,
-      gender: 'unisex',
-    },
-    {
-      name: 'Reebok Instapump Fury',
-      price: 110,
-      gender: 'masculino',
-    },
-    {
-      name: 'Reebok DMX',
-      price: 75,
-      gender: 'femenino',
-    },
-    {
-      name: 'Reebok Floatride Run',
-      price: 95,
-      gender: 'masculino',
-    },
-    {
-      name: 'Reebok Classic',
-      price: 60,
-      gender: 'unisex',
-    },
-    {
-      name: 'Reebok Nano',
-      price: 85,
-      gender: 'femenino',
-    },
-    {
-      name: 'Reebok CrossFit',
-      price: 100,
-      gender: 'masculino',
-    },
-    {
-      name: 'Reebok Speed TR',
-      price: 80,
-      gender: 'unisex',
-    },
-  ];
+  productList: Product[] = [];
 
   sortType: string = '';
 
-  constructor() {}
+  constructor(private _fire: FirebaseService) {}
 
   ngOnInit(): void {
-    this.allProducts = this.productList;
+    this.getProductList();
+  }
+
+  async getProductList() {
+    this.allProducts = await this._fire.getProducts();
+    this.productList = await this._fire.getProducts();
   }
 
   handleProductsFilter(type: string, value: string | string[]): void {
@@ -105,7 +35,7 @@ export class ProductsComponent implements OnInit {
 
     if (type === 'gender') {
       this.productList = this.allProducts.filter((product) =>
-        value.includes(product.gender)
+        value.includes(product.gender.label)
       );
 
       if (value.length === 0) {

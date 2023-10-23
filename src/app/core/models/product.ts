@@ -7,6 +7,7 @@ export type Category = {
 export type Gender = {
   id: string;
   label: string;
+  name?: string;
   value: string;
 };
 
@@ -14,14 +15,16 @@ export type Model = {
   id: string;
   category_id: string;
   label: string;
+  name?: string;
   value: string;
 };
 
-export type AddProduct = {
+export type Product = {
+  id: string;
   name: string;
-  gender: string;
-  model: string;
-  category: string;
+  gender: Gender;
+  model: Model;
+  category: Category;
   price: number;
   images: string[];
 };

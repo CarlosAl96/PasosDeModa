@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -95,8 +95,34 @@ export class CreateProductComponent {
 
     this.loading = true;
 
+    const category = this.categories.find(
+      (category) => category.value === this.formRegister.get('category')?.value
+    );
+    const model = this.models.find(
+      (model) => model.value === this.formRegister.get('model')?.value
+    );
+    const gender = this.genders.find(
+      (gender) => gender.value === this.formRegister.get('gender')?.value
+    );
+
     const data = {
       ...this.formRegister.value,
+      category: {
+        id: category?.id,
+        name: category?.label,
+        code: category?.value,
+      },
+      model: {
+        id: model?.id,
+        category_id: model?.category_id,
+        name: model?.label,
+        code: model?.value,
+      },
+      gender: {
+        id: gender?.id,
+        name: gender?.label,
+        code: gender?.value,
+      },
       images: this.productImages,
     };
 
@@ -107,6 +133,7 @@ export class CreateProductComponent {
           this.alertService.success('Producto creado Exitosamente');
 
           this.loading = false;
+
           this.closeDialog();
         })
         .catch((error) => {
@@ -125,7 +152,7 @@ export class CreateProductComponent {
   }
 
   closeDialog() {
-    this.ref.close();
+    this.ref.close('hola');
     this.message = '';
   }
 }

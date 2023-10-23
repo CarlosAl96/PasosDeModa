@@ -4,6 +4,7 @@
       <app-filter-accordion
         (handleSelectedSortType)="handleProductsFilter('sort', $event)"
         (handleSelectedGender)="handleProductsFilter('gender', $event)"
+        (refreshList)="getProductList()"
       ></app-filter-accordion>
     </div>
 
