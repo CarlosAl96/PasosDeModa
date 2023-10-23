@@ -13,6 +13,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OrderCartComponent } from './modules/order-cart/order-cart.component';
 import { FilterAccordionComponent } from './components/filter-accordion/filter-accordion.component';
 import { OrdersComponent } from './modules/orders/orders.component';
+import { CreateProductComponent } from './modules/create-product/create-product.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+
+import { DropzoneModule } from 'ngx-dropzone-wrapper';
+import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
+import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
+import { AlertServiceService } from './core/services/alert-service.service';
+
+const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
+  // Change this to your upload POST address:
+  url: 'https://httpbin.org/post',
+  maxFilesize: 50,
+  acceptedFiles: 'image/*',
+};
 
 @NgModule({
   declarations: [
@@ -26,6 +40,7 @@ import { OrdersComponent } from './modules/orders/orders.component';
     OrderCartComponent,
     FilterAccordionComponent,
     OrdersComponent,
+    CreateProductComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,8 +48,16 @@ import { OrdersComponent } from './modules/orders/orders.component';
     SharedComponentsModule,
     FormsModule,
     ReactiveFormsModule,
+    DropzoneModule,
+    SweetAlert2Module.forRoot(),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: DROPZONE_CONFIG,
+      useValue: DEFAULT_DROPZONE_CONFIG,
+    },
+    AlertServiceService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

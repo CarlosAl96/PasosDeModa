@@ -1,4 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { DialogService } from 'primeng/dynamicdialog';
+import { CreateProductComponent } from 'src/app/modules/create-product/create-product.component';
 
 @Component({
   selector: 'app-filter-accordion',
@@ -30,6 +32,8 @@ export class FilterAccordionComponent implements OnInit {
     'H 11 / M 13.5',
   ];
 
+  constructor(private _dialogService: DialogService) {}
+
   ngOnInit(): void {}
 
   handleGender(): void {
@@ -38,5 +42,11 @@ export class FilterAccordionComponent implements OnInit {
 
   handleSort(): void {
     this.handleSelectedSortType.emit(this.sortBy);
+  }
+
+  showModalLogin() {
+    this._dialogService.open(CreateProductComponent, {
+      header: 'Crear producto',
+    });
   }
 }

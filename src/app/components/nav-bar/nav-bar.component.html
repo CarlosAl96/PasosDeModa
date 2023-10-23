@@ -8,7 +8,7 @@
   </ng-template>
 
   <ng-template pTemplate="end">
-    <div class="flex flex-row algin-items-center">
+    <div class="flex flex-row algin-items-center" *ngIf="!user">
       <input type="text" pInputText placeholder="Search" class="w-full mr-3" />
       <p-button
         label="Iniciar sesión"
@@ -20,6 +20,18 @@
         (onClick)="showModalRegister()"
         class="w-full"
       ></p-button>
+    </div>
+
+    <div class="flex flex-row algin-items-center p-2" *ngIf="user?.id_user">
+      <div class="d-flex algin-items-center">
+        <span>
+          {{ user?.name + " " + user?.surname }}
+        </span>
+
+        <div class="ml-2">
+          <img  src="assets/images/avatar.jpg" alt="avatar" width="30" />
+        </div>
+      </div>
     </div>
   </ng-template>
 </p-menubar>

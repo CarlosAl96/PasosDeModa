@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
+import { User } from 'src/app/core/models/user';
 import { FirebaseService } from 'src/app/core/services/firebase.service';
 import { LoginComponent } from 'src/app/modules/login/login.component';
 import { RegisterComponent } from 'src/app/modules/register/register.component';
@@ -12,6 +13,7 @@ import { RegisterComponent } from 'src/app/modules/register/register.component';
 })
 export class NavBarComponent implements OnInit {
   items: MenuItem[] | undefined;
+  user: User | undefined;
 
   constructor(
     private _dialogService: DialogService,
@@ -23,6 +25,8 @@ export class NavBarComponent implements OnInit {
 
     this._fire.getUser().subscribe((resp) => {
       console.log(resp);
+
+      this.user = resp;
     });
   }
 
