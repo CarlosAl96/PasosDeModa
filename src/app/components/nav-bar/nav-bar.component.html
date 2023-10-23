@@ -1,25 +1,38 @@
-<p-menubar [model]="items">
-  <ng-template pTemplate="start">
-    <!-- <img
-      src="https://primefaces.org/cdn/primeng/images/primeng.svg"
-      height="40"
-      class="mr-2"
-    /> -->
-  </ng-template>
+<div class="header">
+  <h1>PASOS DE MODA</h1>
 
-  <ng-template pTemplate="end">
-    <div class="flex flex-row algin-items-center">
-      <input type="text" pInputText placeholder="Search" class="w-full mr-3" />
-      <p-button
-        label="Iniciar sesión"
-        (onClick)="showModalLogin()"
-        class="w-full"
-      ></p-button>
-      <p-button
-        label="Registrarse"
-        (onClick)="showModalRegister()"
-        class="w-full"
-      ></p-button>
+  <div
+    class="flex flex-row align-items-center"
+    *ngIf="isLogged && isLoadedComponent"
+  >
+    <div class="circle user">
+      <i class="pi pi-user"></i>
     </div>
-  </ng-template>
-</p-menubar>
+
+    <span>{{ userName }}</span>
+
+    <div class="circle opt config">
+      <i class="pi pi-cog"></i>
+    </div>
+
+    <div class="circle opt logout">
+      <i class="pi pi-power-off"></i>
+    </div>
+  </div>
+
+  <div
+    class="flex flex-row algin-items-center w-25"
+    *ngIf="!isLogged && isLoadedComponent"
+  >
+    <p-button
+      label="Iniciar sesión"
+      (onClick)="showModalLogin()"
+      class="w-full"
+    ></p-button>
+    <p-button
+      label="Registrarse"
+      (onClick)="showModalRegister()"
+      class="w-full"
+    ></p-button>
+  </div>
+</div>
