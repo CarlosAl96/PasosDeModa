@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { User } from 'src/app/core/models/user';
 import { FirebaseService } from 'src/app/core/services/firebase.service';
@@ -12,8 +11,9 @@ import { RegisterComponent } from 'src/app/modules/register/register.component';
   styleUrls: ['./nav-bar.component.scss'],
 })
 export class NavBarComponent implements OnInit {
-  items: MenuItem[] | undefined;
-  user: User | undefined;
+  userName: string = '';
+  isLogged: boolean = false;
+  isLoadedComponent: boolean = false;
 
   constructor(
     private _dialogService: DialogService,
@@ -21,12 +21,15 @@ export class NavBarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.items = [];
-
     this._fire.getUser().subscribe((resp) => {
-      console.log(resp);
-
-      this.user = resp;
+      if (resp.id_user !== '') {
+        this.userName = resp.name + ' ' + resp.surname;
+        this.isLogged = true;
+        this.isLoadedComponent = true;
+      } else {
+        this.isLogged = false;
+        this.isLoadedComponent = true;
+      }
     });
   }
 

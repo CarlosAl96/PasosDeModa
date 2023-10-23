@@ -1,37 +1,38 @@
-<p-menubar [model]="items">
-  <ng-template pTemplate="start">
-    <!-- <img
-      src="https://primefaces.org/cdn/primeng/images/primeng.svg"
-      height="40"
-      class="mr-2"
-    /> -->
-  </ng-template>
+<div class="header">
+  <h1>PASOS DE MODA</h1>
 
-  <ng-template pTemplate="end">
-    <div class="flex flex-row algin-items-center" *ngIf="!user">
-      <input type="text" pInputText placeholder="Search" class="w-full mr-3" />
-      <p-button
-        label="Iniciar sesión"
-        (onClick)="showModalLogin()"
-        class="w-full"
-      ></p-button>
-      <p-button
-        label="Registrarse"
-        (onClick)="showModalRegister()"
-        class="w-full"
-      ></p-button>
+  <div
+    class="flex flex-row align-items-center"
+    *ngIf="isLogged && isLoadedComponent"
+  >
+    <div class="circle user">
+      <i class="pi pi-user"></i>
     </div>
 
-    <div class="flex flex-row algin-items-center p-2" *ngIf="user?.id_user">
-      <div class="d-flex algin-items-center">
-        <span>
-          {{ user?.name + " " + user?.surname }}
-        </span>
+    <span>{{ userName }}</span>
 
-        <div class="ml-2">
-          <img src="assets/images/avatar.png" alt="avatar" width="30" />
-        </div>
-      </div>
+    <div class="circle opt config">
+      <i class="pi pi-cog"></i>
     </div>
-  </ng-template>
-</p-menubar>
+
+    <div class="circle opt logout">
+      <i class="pi pi-power-off"></i>
+    </div>
+  </div>
+
+  <div
+    class="flex flex-row algin-items-center w-25"
+    *ngIf="!isLogged && isLoadedComponent"
+  >
+    <p-button
+      label="Iniciar sesión"
+      (onClick)="showModalLogin()"
+      class="w-full"
+    ></p-button>
+    <p-button
+      label="Registrarse"
+      (onClick)="showModalRegister()"
+      class="w-full"
+    ></p-button>
+  </div>
+</div>
