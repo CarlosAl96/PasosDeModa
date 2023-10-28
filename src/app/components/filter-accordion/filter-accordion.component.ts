@@ -1,4 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { CreateProductComponent } from 'src/app/modules/create-product/create-product.component';
 
 @Component({
   selector: 'app-filter-accordion',
@@ -8,6 +10,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class FilterAccordionComponent implements OnInit {
   @Output() handleSelectedGender = new EventEmitter<string[]>();
   @Output() handleSelectedSortType = new EventEmitter<string>();
+  @Output() refreshList = new EventEmitter<boolean>();
 
   sortBy: string = '';
   gender: string = '';
@@ -30,6 +33,10 @@ export class FilterAccordionComponent implements OnInit {
     'H 11 / M 13.5',
   ];
 
+  ref: DynamicDialogRef | any;
+
+  constructor(private _dialogService: DialogService) {}
+
   ngOnInit(): void {}
 
   handleGender(): void {
@@ -38,5 +45,17 @@ export class FilterAccordionComponent implements OnInit {
 
   handleSort(): void {
     this.handleSelectedSortType.emit(this.sortBy);
+  }
+
+  showModalLogin() {
+    this.ref = this._dialogService.open(CreateProductComponent, {
+      header: 'Crear producto',
+    });
+
+    if (this.ref) {
+      this.ref.onClose.subscribe((ouput: any) => {
+        this.refreshList.emit(true);
+      });
+    }
   }
 }

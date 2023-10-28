@@ -1,0 +1,63 @@
+<div class="form-wrapper">
+  <form [formGroup]="formRegister" class="p-5 pt-3">
+    <div class="p-field w-full flex flex-row justify-content-between mt-2">
+      <span class="p-input-icon-right p-float-label">
+        <input type="text" id="name" formControlName="name" pInputText />
+        <label for="name">Nombre</label>
+      </span>
+
+      <span class="p-input-icon-right p-float-label ml-3">
+        <input type="number" id="price" formControlName="price" pInputText />
+        <label for="price">Precio</label>
+      </span>
+    </div>
+
+    <div class="p-field w-full flex flex-row justify-content-between mt-6">
+      <p-dropdown
+        formControlName="gender"
+        [options]="genders"
+        placeholder="Seleccionar género"
+      ></p-dropdown>
+
+      <p-dropdown
+        formControlName="category"
+        [options]="categories"
+        placeholder="Seleccionar Categoria"
+      ></p-dropdown>
+    </div>
+
+    <div class="p-field w-full flex flex-row justify-content-between mt-6">
+      <p-dropdown
+        formControlName="model"
+        [options]="models"
+        placeholder="Seleccionar Modelo"
+      ></p-dropdown>
+    </div>
+
+    <div class="mt-2">
+      <dropzone
+        [config]="config"
+        [message]="'Subir imagenes'"
+        (error)="onUploadError($event)"
+        (success)="onUploadSuccess($event)"
+      ></dropzone>
+    </div>
+
+    <div class="flex justify-content-center">
+      <button
+        type="submit"
+        (click)="save()"
+        pButton
+        class="mt-5"
+        [disabled]="productImages.length === 0 || loading"
+      >
+        <span
+          class="spinner-border spinner-border-sm mr-2"
+          aria-hidden="true"
+          *ngIf="loading"
+        ></span>
+        <span role="status">{{ loading ? "Creando" : "Crear" }}</span>
+      </button>
+    </div>
+  </form>
+</div>
