@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FirebaseService } from 'src/app/core/services/firebase.service';
 import { LoginComponent } from 'src/app/modules/login/login.component';
@@ -10,7 +10,7 @@ import { RegisterComponent } from 'src/app/modules/register/register.component';
   styleUrls: ['./nav-bar.component.scss'],
 })
 export class NavBarComponent implements OnInit {
-  userName: string = '';
+  userName: string = ' ';
   isLogged: boolean = false;
   isLoadedComponent: boolean = false;
 
@@ -23,6 +23,9 @@ export class NavBarComponent implements OnInit {
     this._fire.getUser().subscribe((resp) => {
       if (resp.id_user !== '') {
         this.userName = resp.name + ' ' + resp.surname;
+
+        console.log(this.userName);
+
         this.isLogged = true;
         this.isLoadedComponent = true;
       } else {

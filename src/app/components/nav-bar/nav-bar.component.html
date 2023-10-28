@@ -1,5 +1,5 @@
 <div class="header">
-  <h1>PASOS DE MODA</h1>
+  <span class="title">Pasos de Moda</span>
 
   <div
     class="flex flex-row align-items-center"
@@ -22,7 +22,7 @@
 
   <div
     class="flex flex-row algin-items-center w-25"
-    *ngIf="!isLogged && isLoadedComponent"
+    *ngIf="userName===''"
   >
     <p-button
       label="Iniciar sesión"
