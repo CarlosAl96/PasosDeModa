@@ -1,6 +1,7 @@
 export type Category = {
   id: string;
   label: string;
+  code?: string;
   value: string;
 };
 
@@ -9,6 +10,7 @@ export type Gender = {
   label: string;
   name?: string;
   value: string;
+  code?: string
 };
 
 export type Model = {
@@ -17,6 +19,7 @@ export type Model = {
   label: string;
   name?: string;
   value: string;
+  code?: string
 };
 
 export type Product = {
@@ -28,6 +31,7 @@ export type Product = {
   price: number;
   sizes: string[];
   images: string[];
+  quantity?: number;
 };
 
 export type OrderStatus = 'pending' | 'delivered' | 'canceled' | 'in_proccess';

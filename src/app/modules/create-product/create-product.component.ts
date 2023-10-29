@@ -6,11 +6,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { User } from 'src/app/core/models/user';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FirebaseService } from 'src/app/core/services/firebase.service';
 import { SelectItem } from 'primeng/api';
-import { Category, Gender, Model } from 'src/app/core/models/product';
+import { Category, Gender, Model, Product } from 'src/app/core/models/product';
 import { AlertServiceService } from 'src/app/core/services/alert-service.service';
 
 @Component({
@@ -26,6 +25,7 @@ export class CreateProductComponent {
   genders: Gender[] = [];
   models: Model[] = [];
   productImages: string[] = [];
+  previewImages: string[] = [];
   loading: boolean = false;
 
   sizes: string[] = [
@@ -64,7 +64,8 @@ export class CreateProductComponent {
     private _formBuilder: FormBuilder,
     private _fire: FirebaseService,
     public ref: DynamicDialogRef,
-    private alertService: AlertServiceService
+    private alertService: AlertServiceService,
+    public DialogConfig: DynamicDialogConfig
   ) {}
 
   ngOnInit(): void {
@@ -72,7 +73,9 @@ export class CreateProductComponent {
     this.getModel();
     this.getGenders();
 
-    this.buildForm();
+    console.log(this.DialogConfig);
+
+    this.buildForm(this.DialogConfig.data);
   }
 
   async getCategories() {
@@ -87,15 +90,36 @@ export class CreateProductComponent {
     this.genders = await this._fire.getGenders();
   }
 
-  buildForm(): void {
+  buildForm(product?: Product): void {
     this.formRegister = this._formBuilder.group({
-      name: ['', [Validators.compose([Validators.required])]],
-      model: ['', [Validators.compose([Validators.required])]],
-      gender: ['', [Validators.compose([Validators.required])]],
-      price: ['', [Validators.compose([Validators.required])]],
-      category: ['', [Validators.compose([Validators.required])]],
-      quantity: ['', [Validators.compose([Validators.required])]],
+      name: [product?.name || '', [Validators.compose([Validators.required])]],
+      model: [
+        product?.model?.code || '',
+        [Validators.compose([Validators.required])],
+      ],
+      gender: [
+        product?.gender?.code || '',
+        [Validators.compose([Validators.required])],
+      ],
+      price: [
+        product?.price || '',
+        [Validators.compose([Validators.required])],
+      ],
+      category: [
+        product?.category?.code || '',
+        [Validators.compose([Validators.required])],
+      ],
+      quantity: [
+        product?.quantity || '',
+        [Validators.compose([Validators.required])],
+      ],
     });
+
+    if (product) {
+      this.selectedSizes = product.sizes;
+
+      this.previewImages = product.images;
+    }
   }
 
   handleSelectSizes(size: string): void {
@@ -104,6 +128,10 @@ export class CreateProductComponent {
     } else {
       this.selectedSizes = [...this.selectedSizes, size];
     }
+  }
+
+  handlePreviewImages(item: string) {
+    this.previewImages = this.previewImages.filter((image) => image !== item);
   }
 
   save() {
@@ -115,7 +143,10 @@ export class CreateProductComponent {
     this.formRegister.controls['category'].markAsDirty();
     this.formRegister.controls['quantity'].markAsDirty();
 
-    if (!this.formRegister.valid || this.productImages.length === 0) {
+    if (
+      !this.formRegister.valid ||
+      (this.productImages.length === 0 && this.previewImages.length === 0)
+    ) {
       this.message = 'Todos los campos del formulario son requeridos';
 
       return;
@@ -132,6 +163,8 @@ export class CreateProductComponent {
     const gender = this.genders.find(
       (gender) => gender.value === this.formRegister.get('gender')?.value
     );
+
+    console.log(this.selectedSizes);
 
     const data = {
       ...this.formRegister.value,
@@ -151,24 +184,42 @@ export class CreateProductComponent {
         name: gender?.label,
         code: gender?.value,
       },
-      images: this.productImages,
+      images: [...this.productImages, ...this.previewImages],
       sizes: this.selectedSizes,
     };
 
+    console.log(data);
+
     if (this.formRegister.valid) {
-      this._fire
-        .AddProduct(data)
-        .then((response) => {
-          this.alertService.success('Producto creado Exitosamente');
+      if (!this.DialogConfig.data?.id) {
+        this._fire
+          .AddProduct(data)
+          .then((response) => {
+            this.alertService.success('Producto creado Exitosamente');
 
-          this.loading = false;
+            this.loading = false;
 
-          this.closeDialog();
-        })
-        .catch((error) => {
-          this.alertService.success('Ha ocurrido un error');
-          this.loading = false;
-        });
+            this.closeDialog();
+          })
+          .catch((error) => {
+            this.alertService.success('Ha ocurrido un error');
+            this.loading = false;
+          });
+      } else {
+        this._fire
+          .editProduct(data, this.DialogConfig.data?.id)
+          .then((response) => {
+            this.alertService.success('Producto actualizado Exitosamente');
+
+            this.loading = false;
+
+            this.closeDialog();
+          })
+          .catch((error) => {
+            this.alertService.success('Ha ocurrido un error');
+            this.loading = false;
+          });
+      }
     }
   }
 
@@ -176,12 +227,40 @@ export class CreateProductComponent {
     console.log('onUploadError:', args);
   }
 
+  convertToFile(
+    base64String: string,
+    filename: string,
+    contentType: 'image/png'
+  ) {
+    const base64Content = base64String.split(',')[1];
+    const byteCharacters = atob(base64Content);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+      const slice = byteCharacters.slice(offset, offset + 512);
+      const byteNumbers = new Array(slice.length);
+
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, { type: contentType });
+    const file = new File([blob], filename, { type: contentType });
+    return file;
+  }
+
   public onUploadSuccess(args: any): void {
     this.productImages = [...this.productImages, args[1]?.files?.file];
+
+    console.log(this.productImages);
   }
 
   closeDialog() {
-    this.ref.close('hola');
+    this.ref.close();
     this.message = '';
   }
 }

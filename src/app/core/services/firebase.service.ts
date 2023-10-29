@@ -23,6 +23,7 @@ import {
   doc,
   setDoc,
   updateDoc,
+  deleteDoc,
 } from 'firebase/firestore';
 import { BehaviorSubject } from 'rxjs';
 import {
@@ -188,6 +189,18 @@ export class FirebaseService {
     return addDoc(productsRef, data);
   }
 
+  async editProduct(data: Product, id: string) {
+    const productsRef = doc(collection(this.querydb, 'products'), id);
+
+    const response = await updateDoc(productsRef, {
+      ...data,
+    });
+
+    console.log(response)
+
+    return '';
+  }
+
   /**
    * orders
    */
@@ -238,6 +251,18 @@ export class FirebaseService {
     })
       .then(() => {
         console.log('Documento actualizado correctamente');
+      })
+      .catch((error) => {
+        console.error('Error al actualizar el documento:', error);
+      });
+  }
+
+  async removeProductOrder(productOrderId: string) {
+    const orderRef = doc(collection(this.querydb, 'orders'), productOrderId);
+
+    deleteDoc(orderRef)
+      .then(() => {
+        console.log('Documento eliminado correctamente');
       })
       .catch((error) => {
         console.error('Error al actualizar el documento:', error);

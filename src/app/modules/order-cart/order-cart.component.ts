@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
+import { DeliveryModalComponent } from 'src/app/components/delivery-modal/delivery-modal.component';
 import { ProductOrder } from 'src/app/core/models/product';
 import { User } from 'src/app/core/models/user';
 import { AlertServiceService } from 'src/app/core/services/alert-service.service';
@@ -24,17 +27,49 @@ export class OrderCartComponent implements OnInit {
   productPrices: { id: string; price: number; quantity: number }[] = [];
   user: User | undefined;
   loading: boolean = false;
+  loadingCancel: boolean = false;
+  items: MenuItem[] | undefined;
 
   constructor(
     private _fire: FirebaseService,
     private alertService: AlertServiceService,
-    private router: Router
+    private router: Router,
+    private _dialogService: DialogService
   ) {}
 
   ngOnInit() {
     this._fire.getUser().subscribe((resp) => {
       this.user = resp;
       this.getProductOrder(this.user.id_user);
+    });
+
+    this.items = [
+      {
+        label: 'Selecciona un modo de entrega',
+        items: [
+          {
+            label: 'Pick Up',
+
+            command: () => {
+              this.createOrder();
+            },
+          },
+          {
+            label: 'Delivery',
+
+            command: () => {
+              this.showDeliveryModal();
+            },
+          },
+        ],
+      },
+    ];
+  }
+
+  showDeliveryModal() {
+    this._dialogService.open(DeliveryModalComponent, {
+      header: 'Pedido por delivery',
+      data: this.productOrders,
     });
   }
 
@@ -85,7 +120,8 @@ export class OrderCartComponent implements OnInit {
     this.productOrders.forEach(async (item) => {
       const data = {
         price: item.product.price,
-        selectedQuantity: item.product.selectedQuantity,
+        selectedQuantity: item.product.selectedQuantity || 1,
+        deliverMethod: 'pick-up',
       };
 
       await this._fire.editOrder(item.id, data);
@@ -101,5 +137,17 @@ export class OrderCartComponent implements OnInit {
         }, 1500);
       }
     });
+  }
+
+  async cancelProductOrder(productOrderId: string) {
+    this.loadingCancel = true;
+    try {
+      await this._fire.removeProductOrder(productOrderId);
+      this.getProductOrder(this.user?.id_user as string);
+      this.loadingCancel = false;
+    } catch (error) {
+      this.alertService.error('Ha ocurrido un error');
+      this.loadingCancel = false;
+    }
   }
 }

@@ -20,6 +20,7 @@ export class ProductsComponent implements OnInit {
   }
 
   async getProductList() {
+    console.log('hola2')
     this.allProducts = await this._fire.getProducts();
     this.productList = await this._fire.getProducts();
   }

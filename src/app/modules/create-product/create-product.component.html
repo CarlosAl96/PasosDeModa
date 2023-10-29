@@ -60,6 +60,19 @@
       </div>
     </div>
 
+    <div class="d-flex mt-3">
+      <div *ngFor="let item of previewImages">
+        <img
+          src="{{ item }}"
+          alt="preview"
+          class="preview-image mr-2"
+          [pTooltip]="'Eliminar'"
+          [tooltipPosition]="'top'"
+          (click)="handlePreviewImages(item)"
+        />
+      </div>
+    </div>
+
     <div class="mt-2">
       <dropzone
         [config]="config"
@@ -78,6 +91,7 @@
         [disabled]="
           productImages.length === 0 || loading || selectedSizes.length === 0
         "
+        *ngIf="!DialogConfig.data?.id"
       >
         <span
           class="spinner-border spinner-border-sm mr-2"
@@ -85,6 +99,26 @@
           *ngIf="loading"
         ></span>
         <span role="status">{{ loading ? "Creando" : "Crear" }}</span>
+      </button>
+
+      <button
+        type="submit"
+        (click)="save()"
+        pButton
+        class="mt-5"
+        [disabled]="
+          (productImages.length === 0 && previewImages.length === 0) ||
+          loading ||
+          selectedSizes.length === 0
+        "
+        *ngIf="DialogConfig.data?.id"
+      >
+        <span
+          class="spinner-border spinner-border-sm mr-2"
+          aria-hidden="true"
+          *ngIf="loading"
+        ></span>
+        <span role="status">{{ loading ? "Editando" : "Editar" }}</span>
       </button>
     </div>
   </form>

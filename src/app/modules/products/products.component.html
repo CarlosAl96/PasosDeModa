@@ -11,7 +11,12 @@
     <div class="col-9">
       <div class="products">
         <div *ngFor="let item of productList">
-          <app-card class="product" [product]="item"></app-card>
+          <app-card
+            class="product"
+            [product]="item"
+            (refreshList)="getProductList()"
+          >
+          </app-card>
         </div>
       </div>
     </div>

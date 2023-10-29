@@ -17,7 +17,8 @@ import { TableModule } from 'primeng/table';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
-
+import { MenuModule } from 'primeng/menu';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [],
@@ -39,6 +40,8 @@ import { ButtonModule } from 'primeng/button';
     TableModule,
     MultiSelectModule,
     TagModule,
+    MenuModule,
+    TooltipModule,
   ],
   exports: [
     BrowserModule,
@@ -57,6 +60,8 @@ import { ButtonModule } from 'primeng/button';
     TableModule,
     MultiSelectModule,
     TagModule,
+    MenuModule,
+    TooltipModule,
   ],
   providers: [DialogService],
 })

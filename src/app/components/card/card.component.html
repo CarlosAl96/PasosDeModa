@@ -1,19 +1,22 @@
-<p-card
-  [style]="{ width: '270px' }"
-  routerLink="{{ '/product/' + product.id + '/details' }}"
-  *ngIf="product"
->
+<p-card [style]="{ width: '270px' }" *ngIf="product">
   <ng-template pTemplate="header">
-    <img alt="Card" src="{{ product.images[0] }}" />
+    <div
+      routerLink="{{ '/product/' + product.id + '/details' }}"
+      class="pointer"
+    >
+      <img alt="Card" src="{{ product.images[0] }}" />
 
-    <div class="title">
-      <strong>{{ product?.name }}</strong>
-      <span>${{ product?.price }}</span>
+      <div class="title">
+        <strong>{{ product?.name }}</strong>
+        <span>${{ product?.price }}</span>
+      </div>
     </div>
   </ng-template>
 
-  <div class="mb-2">
+  <div class="mb-2 d-flex justify-content-between align-items-center">
     <span>{{ product?.gender?.name }}</span>
+
+    <i class="pi pi-pencil pointer" (click)="showDeliveryModal()"></i>
   </div>
   <!-- <div>
     <span>{{ product?.availableColors }} Colores</span>
