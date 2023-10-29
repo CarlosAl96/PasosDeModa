@@ -19,9 +19,19 @@ import {
   where,
   getDocs,
   CollectionReference,
+  getDoc,
+  doc,
+  setDoc,
+  updateDoc,
 } from 'firebase/firestore';
 import { BehaviorSubject } from 'rxjs';
-import { Category, Gender, Model, Product } from '../models/product';
+import {
+  Category,
+  Gender,
+  Model,
+  Product,
+  ProductOrder,
+} from '../models/product';
 
 @Injectable({
   providedIn: 'root',
@@ -163,11 +173,74 @@ export class FirebaseService {
     return products as Product[];
   }
 
+  async getProduct(productId: string) {
+    const docRef = doc(this.querydb, 'products', productId);
+    const docSnap = await getDoc(docRef);
+
+    return docSnap?.data() as Product;
+  }
+
   async AddProduct(data: Product) {
     const productsRef: CollectionReference = collection(
       this.querydb,
       'products'
     );
     return addDoc(productsRef, data);
+  }
+
+  /**
+   * orders
+   */
+  async AddProductOrder(data: ProductOrder) {
+    const orderRef: CollectionReference = collection(this.querydb, 'orders');
+    return addDoc(orderRef, data);
+  }
+
+  async getProductOrder(userId: string) {
+    const q = query(
+      collection(this.querydb, 'orders'),
+      where('status', '==', 'in_proccess'),
+      where('userId', '==', userId)
+    );
+    const querySnapshot = await getDocs(q);
+
+    const productOrders = await Promise.all(
+      querySnapshot.docs.map(async (order) => {
+        const docRef = doc(this.querydb, 'products', order.data()['productId']);
+        const docSnap = await getDoc(docRef);
+
+        const qtyList = Array.from(
+          { length: parseInt(docSnap?.data()?.['quantity'] as string) },
+          (item, i) => ({
+            name: i + 1,
+            code: i + 1,
+          })
+        );
+
+        return {
+          ...order.data(),
+          id: order.id,
+          product: docSnap?.data(),
+          quantityList: qtyList,
+        };
+      })
+    );
+
+    return productOrders;
+  }
+
+  async editOrder(orderId: string, data: any) {
+    const orderRef = doc(collection(this.querydb, 'orders'), orderId);
+
+    updateDoc(orderRef, {
+      status: 'pending',
+      ...data,
+    })
+      .then(() => {
+        console.log('Documento actualizado correctamente');
+      })
+      .catch((error) => {
+        console.error('Error al actualizar el documento:', error);
+      });
   }
 }

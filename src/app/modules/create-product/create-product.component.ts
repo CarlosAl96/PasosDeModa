@@ -28,6 +28,24 @@ export class CreateProductComponent {
   productImages: string[] = [];
   loading: boolean = false;
 
+  sizes: string[] = [
+    'H 5 / M 6.5',
+    'H 5.5 / M 7',
+    'H 6 / M 7.5',
+    'H 6.5 / M 8',
+    'H 7 / M 8.5',
+    'H 7.5 / M 9',
+    'H 8 / M 9.5',
+    'H 8.5 / M 10',
+    'H 9 / M 10.5',
+    'H 9.5 / M 11',
+    'H 10 / M 12.5',
+    'H 10.5 / M 13',
+    'H 11 / M 13.5',
+  ];
+
+  selectedSizes: string[] = [];
+
   public config: DropzoneConfigInterface = {
     clickable: true,
     maxFiles: 50,
@@ -76,7 +94,16 @@ export class CreateProductComponent {
       gender: ['', [Validators.compose([Validators.required])]],
       price: ['', [Validators.compose([Validators.required])]],
       category: ['', [Validators.compose([Validators.required])]],
+      quantity: ['', [Validators.compose([Validators.required])]],
     });
+  }
+
+  handleSelectSizes(size: string): void {
+    if (this.selectedSizes.includes(size)) {
+      this.selectedSizes = this.selectedSizes.filter((item) => item !== size);
+    } else {
+      this.selectedSizes = [...this.selectedSizes, size];
+    }
   }
 
   save() {
@@ -86,6 +113,7 @@ export class CreateProductComponent {
     this.formRegister.controls['gender'].markAsDirty();
     this.formRegister.controls['price'].markAsDirty();
     this.formRegister.controls['category'].markAsDirty();
+    this.formRegister.controls['quantity'].markAsDirty();
 
     if (!this.formRegister.valid || this.productImages.length === 0) {
       this.message = 'Todos los campos del formulario son requeridos';
@@ -124,6 +152,7 @@ export class CreateProductComponent {
         code: gender?.value,
       },
       images: this.productImages,
+      sizes: this.selectedSizes,
     };
 
     if (this.formRegister.valid) {

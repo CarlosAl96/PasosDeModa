@@ -23,6 +23,7 @@
         formControlName="category"
         [options]="categories"
         placeholder="Seleccionar Categoria"
+        class="ml-3"
       ></p-dropdown>
     </div>
 
@@ -32,6 +33,31 @@
         [options]="models"
         placeholder="Seleccionar Modelo"
       ></p-dropdown>
+
+      <span class="p-input-icon-right p-float-label ml-3">
+        <input
+          type="number"
+          id="quantity"
+          formControlName="quantity"
+          pInputText
+        />
+        <label for="quantity">Cantidad</label>
+      </span>
+    </div>
+
+    <div class="sizes">
+      <span class="title">Tamaños</span>
+
+      <div class="size-wrapper">
+        <div
+          *ngFor="let item of sizes"
+          class="size"
+          [ngClass]="{ selected: selectedSizes.includes(item) }"
+          (click)="handleSelectSizes(item)"
+        >
+          <span>{{ item }}</span>
+        </div>
+      </div>
     </div>
 
     <div class="mt-2">
@@ -49,7 +75,9 @@
         (click)="save()"
         pButton
         class="mt-5"
-        [disabled]="productImages.length === 0 || loading"
+        [disabled]="
+          productImages.length === 0 || loading || selectedSizes.length === 0
+        "
       >
         <span
           class="spinner-border spinner-border-sm mr-2"

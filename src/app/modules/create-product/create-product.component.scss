@@ -3,7 +3,41 @@
     height: 450px !important;
   }
 
-  .p-dropdown {
-    width: 235px !important;
+  input,
+  span {
+    width: 100%;
+  }
+
+  .p-dropdown,
+  .p-inputwrapper {
+    width: 100% !important;
+  }
+
+  .sizes {
+    margin-top: 20px;
+
+    .title {
+      font-size: 1.25rem;
+    }
+
+    .size-wrapper {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-gap: 10px;
+
+      .size {
+        width: 110px;
+        text-align: center;
+        padding: 5px;
+        border: 1px solid #000;
+        cursor: pointer;
+
+        &.selected {
+          background-color: #000;
+          color: #fff;
+        }
+      }
+    }
   }
 }

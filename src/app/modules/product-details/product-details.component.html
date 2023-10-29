@@ -1,18 +1,18 @@
-<div class="product-details">
+<div class="product-details" *ngIf="product">
   <div class="carousel">
     <p-carousel
-      [value]="productImages"
+      [value]="product.images"
       [numVisible]="1"
       [numScroll]="1"
       [circular]="false"
       [showIndicators]="false"
-      class=""
+      *ngIf="product.images"
     >
-      <ng-template let-product pTemplate="item">
+      <ng-template let-productImage pTemplate="item">
         <div class="surface-border border-round m-2 text-center py-5 px-3">
           <div class="mb-3">
             <img
-              src="{{ 'assets/images/' + product + '.webp' }}"
+              src="{{ productImage }}"
               alt="product"
               class="shadow-2"
               width="700"
@@ -24,18 +24,23 @@
   </div>
   <div class="details mt-5">
     <div>
-      <h3>Example shoe name</h3>
+      <h3>{{ product.name }}</h3>
     </div>
 
     <div>
-      <strong>$30</strong>
+      <strong>${{ product.price }}</strong>
     </div>
 
     <div class="sizes">
       <span class="title">Tamaños</span>
 
       <div class="size-wrapper">
-        <div *ngFor="let item of sizes" class="size">
+        <div
+          *ngFor="let item of product.sizes"
+          class="size"
+          [ngClass]="{ selected: selectedSize === item }"
+          (click)="selectSize(item)"
+        >
           <span>{{ item }}</span>
         </div>
       </div>
@@ -43,10 +48,21 @@
 
     <div class="add-to-card-button">
       <p-button
-        styleClass="p-button-secondary "
-        label="Añadir al carrito"
-        routerLink="/cart"
-      ></p-button>
+        styleClass="p-button-secondary"
+        (onClick)="saveOrder()"
+        [disabled]="selectedSize === ''"
+      >
+        <div class="w-full text-center">
+          <span
+            class="spinner-border spinner-border-sm mr-2"
+            aria-hidden="true"
+            *ngIf="loading"
+          ></span>
+          <span role="status">{{
+            loading ? "Guardando" : "Añadir al carrito"
+          }}</span>
+        </div>
+      </p-button>
     </div>
 
     <div class="mt-6 text-center">

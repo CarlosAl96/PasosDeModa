@@ -26,5 +26,17 @@ export type Product = {
   model: Model;
   category: Category;
   price: number;
+  sizes: string[];
   images: string[];
+};
+
+export type OrderStatus = 'pending' | 'delivered' | 'canceled' | 'in_proccess';
+
+export type ProductOrder = {
+  productId: string;
+  userId: string;
+  dateCreated: string;
+  status: OrderStatus;
+  selectedSize: string;
+  product?: Product;
 };
