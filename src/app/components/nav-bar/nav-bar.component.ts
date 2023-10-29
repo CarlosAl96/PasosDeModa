@@ -1,6 +1,5 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
-import { User } from 'src/app/core/models/user';
 import { FirebaseService } from 'src/app/core/services/firebase.service';
 import { LoginComponent } from 'src/app/modules/login/login.component';
 import { RegisterComponent } from 'src/app/modules/register/register.component';
@@ -13,7 +12,6 @@ import { RegisterComponent } from 'src/app/modules/register/register.component';
 export class NavBarComponent implements OnInit {
   userName: string = '';
   isLogged: boolean = false;
-  isLoadedComponent: boolean = false;
 
   constructor(
     private _dialogService: DialogService,
@@ -24,12 +22,9 @@ export class NavBarComponent implements OnInit {
     this._fire.getUser().subscribe((resp) => {
       if (resp.id_user !== '') {
         this.userName = resp.name + ' ' + resp.surname;
-
         this.isLogged = true;
-        this.isLoadedComponent = true;
       } else {
         this.isLogged = false;
-        this.isLoadedComponent = true;
       }
     });
   }
