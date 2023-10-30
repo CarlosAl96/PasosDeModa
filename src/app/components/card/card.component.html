@@ -16,7 +16,11 @@
   <div class="mb-2 d-flex justify-content-between align-items-center">
     <span>{{ product?.gender?.name }}</span>
 
-    <i class="pi pi-pencil pointer" (click)="showDeliveryModal()"></i>
+    <i
+      *ngIf="isAdmin"
+      class="pi pi-pencil pointer"
+      (click)="showDeliveryModal()"
+    ></i>
   </div>
   <!-- <div>
     <span>{{ product?.availableColors }} Colores</span>

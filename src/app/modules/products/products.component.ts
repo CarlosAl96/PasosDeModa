@@ -10,17 +10,17 @@ import { Product } from 'src/app/core/models/product';
 export class ProductsComponent implements OnInit {
   allProducts: Product[] = [];
   productList: Product[] = [];
-
   sortType: string = '';
 
   constructor(private _fire: FirebaseService) {}
 
   ngOnInit(): void {
     this.getProductList();
+
   }
 
   async getProductList() {
-    console.log('hola2')
+    console.log('hola2');
     this.allProducts = await this._fire.getProducts();
     this.productList = await this._fire.getProducts();
   }

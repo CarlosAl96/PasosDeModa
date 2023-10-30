@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { FirebaseService } from 'src/app/core/services/firebase.service';
 import { CreateProductComponent } from 'src/app/modules/create-product/create-product.component';
 
 @Component({
@@ -16,7 +17,7 @@ export class FilterAccordionComponent implements OnInit {
   gender: string = '';
   size: string = '';
   selectedGender: string[] = [];
-
+  isAdmin: boolean = false;
   sizes: string[] = [
     'H 5 / M 6.5',
     'H 5.5 / M 7',
@@ -35,9 +36,21 @@ export class FilterAccordionComponent implements OnInit {
 
   ref: DynamicDialogRef | any;
 
-  constructor(private _dialogService: DialogService) {}
+  constructor(
+    private _dialogService: DialogService,
+    private _fire: FirebaseService
+  ) {}
+  ngOnInit(): void {
+    this._fire.getUser().subscribe((resp) => {
+      console.log(resp);
 
-  ngOnInit(): void {}
+      if (resp.role == 'admin') {
+        this.isAdmin = true;
+      } else {
+        this.isAdmin = false;
+      }
+    });
+  }
 
   handleGender(): void {
     this.handleSelectedGender.emit(this.selectedGender);

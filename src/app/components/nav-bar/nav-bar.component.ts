@@ -40,4 +40,8 @@ export class NavBarComponent implements OnInit {
       header: 'Crear una nueva cuenta',
     });
   }
+
+  logout() {
+    this._fire.logout();
+  }
 }

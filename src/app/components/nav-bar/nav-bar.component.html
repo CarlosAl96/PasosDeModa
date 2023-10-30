@@ -8,16 +8,15 @@
 
     <span>{{ userName }}</span>
 
-    <div class="circle opt config">
-      <i class="pi pi-cog"></i>
-    </div>
-
-    <div class="circle opt logout">
+    <div class="circle opt logout" (click)="logout()">
       <i class="pi pi-power-off"></i>
     </div>
   </div>
 
-  <div class="flex flex-row algin-items-center justify-content-between" *ngIf="!isLogged">
+  <div
+    class="flex flex-row algin-items-center justify-content-between"
+    *ngIf="!isLogged"
+  >
     <p-button
       label="Iniciar sesión"
       (onClick)="showModalLogin()"

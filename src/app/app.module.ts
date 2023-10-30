@@ -21,6 +21,8 @@ import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { AlertServiceService } from './core/services/alert-service.service';
 import { DeliveryModalComponent } from './components/delivery-modal/delivery-modal.component';
+import { DashboardComponent } from './modules/dashboard/dashboard.component';
+import { CustomersComponent } from './modules/customers/customers.component';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
@@ -43,6 +45,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     OrdersComponent,
     CreateProductComponent,
     DeliveryModalComponent,
+    DashboardComponent,
+    CustomersComponent,
   ],
   imports: [
     BrowserModule,

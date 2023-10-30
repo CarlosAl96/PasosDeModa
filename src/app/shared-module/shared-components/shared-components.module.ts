@@ -19,6 +19,7 @@ import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { TooltipModule } from 'primeng/tooltip';
+import { TabMenuModule } from 'primeng/tabmenu';
 
 @NgModule({
   declarations: [],
@@ -42,6 +43,7 @@ import { TooltipModule } from 'primeng/tooltip';
     TagModule,
     MenuModule,
     TooltipModule,
+    TabMenuModule,
   ],
   exports: [
     BrowserModule,
@@ -62,6 +64,7 @@ import { TooltipModule } from 'primeng/tooltip';
     TagModule,
     MenuModule,
     TooltipModule,
+    TabMenuModule,
   ],
   providers: [DialogService],
 })

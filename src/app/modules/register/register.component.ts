@@ -70,6 +70,7 @@ export class RegisterComponent {
         phone: this.formRegister.controls['phone'].value,
         address: this.formRegister.controls['address'].value,
         password: this.formRegister.controls['password'].value,
+        role: 'user',
       };
 
       this._fire

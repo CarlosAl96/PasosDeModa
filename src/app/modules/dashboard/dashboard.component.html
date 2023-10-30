@@ -1,0 +1,17 @@
+<div class="card pt-3">
+  <p-tabMenu
+    [model]="items"
+    [activeItem]="activeItem"
+    (activeItemChange)="onActiveItemChange($event)"
+  ></p-tabMenu>
+</div>
+
+<div *ngIf="activeItem?.label == 'Pedidos'">
+  <app-orders></app-orders>
+</div>
+<div *ngIf="activeItem?.label == 'Productos'">
+  <app-products></app-products>
+</div>
+<div *ngIf="activeItem?.label == 'Clientes'">
+  <app-customers></app-customers>
+</div>

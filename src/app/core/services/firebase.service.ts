@@ -33,6 +33,7 @@ import {
   Product,
   ProductOrder,
 } from '../models/product';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -44,7 +45,7 @@ export class FirebaseService {
 
   private user = new BehaviorSubject<User>(new User());
 
-  constructor() {
+  constructor(private router: Router) {
     this.app = initializeApp(environment.firebase);
     this.auth = getAuth(this.app);
     this.querydb = getFirestore();
@@ -71,6 +72,8 @@ export class FirebaseService {
 
   logout() {
     this.user.next(new User());
+    localStorage.removeItem('uid');
+    this.router.navigate(['']);
     return signOut(this.auth);
   }
 
@@ -86,6 +89,11 @@ export class FirebaseService {
         user.name = userData['name'];
         user.surname = userData['surname'];
         user.phone = userData['address'];
+        user.role = userData['role'];
+
+        if (user.role == 'admin') {
+          this.router.navigate(['dashboard']);
+        }
         this.user.next(user);
       });
     });
@@ -196,7 +204,7 @@ export class FirebaseService {
       ...data,
     });
 
-    console.log(response)
+    console.log(response);
 
     return '';
   }

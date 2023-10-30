@@ -6,6 +6,7 @@ export class User {
   public phone: string;
   public address: string;
   public password?: string;
+  public role?: string;
 
   constructor() {
     this.id_user = '';
@@ -15,5 +16,6 @@ export class User {
     this.phone = '';
     this.address = '';
     this.password = '';
+    this.role = '';
   }
 }
