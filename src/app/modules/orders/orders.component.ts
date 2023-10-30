@@ -90,4 +90,12 @@ export class OrdersComponent {
   constructor() {}
 
   ngOnInit() {}
+
+  mark(id: number) {
+    for (let i = 0; i < this.orders.length; i++) {
+      if (this.orders[i].product_id == id) {
+        this.orders[i].status = 'Entregado';
+      }
+    }
+  }
 }

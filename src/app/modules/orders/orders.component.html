@@ -32,6 +32,7 @@
                 product.status === 'Pendiente' && 'Marcar como entregado'
               }}"
               [disabled]="product.status === 'Entregado'"
+              (click)="mark(product.product_id)"
             >
               {{ product.status }}
             </button>
